@@ -34,3 +34,21 @@ jobs:
         with:
           name: screenshots
           path: screenshots
+
+      - name: Send success notification on Discord
+        if: success()
+        run: |
+          curl -X POST -H "Content-Type: application/json" \
+          --data '{
+          "content": "🎉 The tests passed successfully! Everything is looking good! \n\nView the run details here: '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}' "
+          }' \
+          https://discord.com/api/webhooks/1354513761079267569/g7jpR_uUZ1qT_N0vjyzyUstO8X7BIe7pSV5GS5212Ysm6RI8SXt6aWkT-o4VA0ZAs_3f
+
+      - name: Send failure notification on Discord
+        if: failure()
+        run: |
+          curl -X POST -H "Content-Type: application/json" \
+          --data '{
+          "content": "❌ The tests failed! Please check the GitHub Actions logs for more details. \n\nView the run details here: '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}' "
+          }' \
+          https://discord.com/api/webhooks/1354513761079267569/g7jpR_uUZ1qT_N0vjyzyUstO8X7BIe7pSV5GS5212Ysm6RI8SXt6aWkT-o4VA0ZAs_3f
