@@ -13,3 +13,15 @@ jobs:
 
       - name: Run tests
         run: mvn test -Dtest.suite=iOSRegression.xml
+
+      - name: Upload allure results as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
+
+      - name: Upload screenshots folder as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: screenshots
